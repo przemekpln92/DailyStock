@@ -63,7 +63,15 @@ def index(request):
 				"jpxn_prev_close":jpxn[1],
 				"jpxn_name":jpxn[2][1],
 				"jpxn_percentage":jpxn_percentage,
-				"aud":usdrates["AUD"]
+				"aud":usdrates["AUD"],
+				"eur":usdrates["EUR"],
+				"gbp":usdrates["GBP"],
+				"chf":usdrates["CHF"],
+				"dkk":usdrates["DKK"],
+				"nok":usdrates["NOK"],
+				"sek":usdrates["SEK"],
+				"rub":usdrates["RUB"],
+				"pln":usdrates["PLN"]
 				})
 		else:
 			return render( request,'index.html',{
@@ -85,7 +93,15 @@ def index(request):
 				"jpxn_prev_close":jpxn[1],
 				"jpxn_name":jpxn[2][1],
 				"jpxn_percentage":jpxn_percentage,
-				"aud":usdrates["AUD"]
+				"aud":usdrates["AUD"],
+				"eur":usdrates["EUR"],
+				"gbp":usdrates["GBP"],
+				"chf":usdrates["CHF"],
+				"dkk":usdrates["DKK"],
+				"nok":usdrates["NOK"],
+				"sek":usdrates["SEK"],
+				"rub":usdrates["RUB"],
+				"pln":usdrates["PLN"]
 				})
 	except KeyError:
 		error = "Wrong ticker! Complete list of tickers you can finde here: https://iextrading.com/trading/eligible-symbols/"
@@ -109,7 +125,15 @@ def index(request):
 			"jpxn_prev_close":jpxn[1],
 			"jpxn_name":jpxn[2][1],
 			"jpxn_percentage":jpxn_percentage,
-			"aud":usdrates["AUD"]
+			"aud":usdrates["AUD"],
+			"eur":usdrates["EUR"],
+			"gbp":usdrates["GBP"],
+			"chf":usdrates["CHF"],
+			"dkk":usdrates["DKK"],
+			"nok":usdrates["NOK"],
+			"sek":usdrates["SEK"],
+			"rub":usdrates["RUB"],
+			"pln":usdrates["PLN"]
 			})
 	except ValueError:
 		error = "Wrong format or date range! Remember, data is available only 5 years back"
@@ -133,7 +157,15 @@ def index(request):
 			"jpxn_prev_close":jpxn[1],
 			"jpxn_name":jpxn[2][1],
 			"jpxn_percentage":jpxn_percentage,
-			"aud":usdrates["AUD"]
+			"aud":usdrates["AUD"],
+			"eur":usdrates["EUR"],
+			"gbp":usdrates["GBP"],
+			"chf":usdrates["CHF"],
+			"dkk":usdrates["DKK"],
+			"nok":usdrates["NOK"],
+			"sek":usdrates["SEK"],
+			"rub":usdrates["RUB"],
+			"pln":usdrates["PLN"]
 			})
 
 def charts(request):

@@ -130,16 +130,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading" >
                     {% block body %}
-                        <div class="container">
-                            <div class="col-xs-2">
-                                <form method="post" >
+                            <i class="fas fa-chart-line"></i> CandleStick Chart Area
+                            <div class="col-xs-2" style="width: 100%">
+                                <form method="post" style="width: 100%" >
                                     {% csrf_token %}
-                                    {{ ticker_date_form.as_p }}
-                                    {{text}}
+                                    {{ ticker_date_form }}
                                     <button class="btn btn-primary" type="submit">Show</button>
                                 </form>
                             </div>
-                        </div>
                         </br>
                         <div class="container">
                             {{error}}
@@ -184,48 +182,48 @@
                 <div class="panel-body">
                     <div class="list-group">
                         <p class="list-group-item">
-                            <i class="fa fa-comment fa-fw"></i> AUD
-                            <span class="pull-right text-muted small"><em>{{aud}}</em>
+                            <span style="font-weight: 600">AUD</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{aud}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                            <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                            <span style="font-weight: 600">EUR</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{eur}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-envelope fa-fw"></i> Message Sent
-                            <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                            <span style="font-weight: 600">GBP</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{gbp}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-tasks fa-fw"></i> New Task
-                            <span class="pull-right text-muted small"><em>43 minutes ago</em>
+                            <span style="font-weight: 600">CHF</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{chf}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                            <span class="pull-right text-muted small"><em>11:32 AM</em>
+                            <span style="font-weight: 600">DKK</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{dkk}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-bolt fa-fw"></i> Server Crashed!
-                            <span class="pull-right text-muted small"><em>11:13 AM</em>
+                            <span style="font-weight: 600">NOK</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{nok}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-warning fa-fw"></i> Server Not Responding
-                            <span class="pull-right text-muted small"><em>10:57 AM</em>
+                            <span style="font-weight: 600">SEK</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{sek}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
-                            <span class="pull-right text-muted small"><em>9:49 AM</em>
+                            <span style="font-weight: 600">RUB</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{rub}}</em>
                             </span>
                         </p>
                         <p class="list-group-item">
-                            <i class="fa fa-money fa-fw"></i> Payment Received
-                            <span class="pull-right text-muted small"><em>Yesterday</em>
+                            <span style="font-weight: 600">PLN</span>
+                            <span class="pull-right text-muted small"><em style="font-weight: 800">{{pln}}</em>
                             </span>
                         </p>
                     </div>

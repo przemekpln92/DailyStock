@@ -5,12 +5,14 @@ class TickerAndDate(forms.Form):
 			attrs={
 			'class': 'form-control',
 			'placeholder': 'Ticker',
+			'style':'display: inline-block; max-width: 150px; vertical-align: top;margin-right:20px;margin-top:10px'
 			}
 		),label="")
 	date = forms.CharField(widget=forms.TextInput(
 			attrs={
 			'class': 'form-control',
-			'placeholder': 'yyyy-mm-dd'
+			'placeholder': 'yyyy-mm-dd',
+			'style':'display: inline-block;max-width: 150px;margin-right:20px;margin-top:10px'
 			}
 		),label="")
 	
