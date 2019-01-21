@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+
+{% block indices %}
+
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Dashboard</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            {% if dia_close > dia_prev_close %} 
+                            <i class="fas fa-arrow-up fa-4x"></i>
+                            {% else %}
+                            <i class="fas fa-arrow-down fa-4x"></i>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{dia_close}}</div>
+                            <div>
+                                {% if dia_percentage > 0 %} 
+                                +{{dia_percentage}}%
+                                {% else %}
+                                {{dia_percentage}}%
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="panel-footer">
+                        {{dia_name}}
+                    </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-green">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            {% if spy_close > spy_prev_close %} 
+                            <i class="fas fa-arrow-up fa-4x"></i>
+                            {% else %}
+                            <i class="fas fa-arrow-down fa-4x"></i>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{spy_close}}</div>
+                            <div>
+                                {% if spy_percentage > 0 %} 
+                                +{{spy_percentage}}%
+                                {% else %}
+                                {{spy_percentage}}%
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="panel-footer">
+                        {{spy_name}}
+                    </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-yellow">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            {% if iwm_close > iwm_prev_close %} 
+                            <i class="fas fa-arrow-up fa-4x"></i>
+                            {% else %}
+                            <i class="fas fa-arrow-down fa-4x"></i>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{iwm_close}}</div>
+                            <div>
+                                {% if iwm_percentage > 0 %} 
+                                +{{iwm_percentage}}%
+                                {% else %}
+                                {{iwm_percentage}}%
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="panel-footer">
+                        {{iwm_name}}
+                    </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-red">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            {% if jpxn_close > jpxn_prev_close %} 
+                            <i class="fas fa-arrow-up fa-4x"></i>
+                            {% else %}
+                            <i class="fas fa-arrow-down fa-4x"></i>
+                            {% endif %}
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{jpxn_close}}</div>
+                            <div>
+                                {% if jpxn_percentage > 0 %} 
+                                +{{jpxn_percentage}}%
+                                {% else %}
+                                {{jpxn_percentage}}%
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                    <div class="panel-footer">
+                        {{jpxn_name}}
+                    </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="panel panel-default">
+                <div class="panel-heading" >
+                    {% block body %}
+                        <div class="container">
+                            <div class="col-xs-2">
+                                <form method="post" >
+                                    {% csrf_token %}
+                                    {{ ticker_date_form.as_p }}
+                                    {{text}}
+                                    <button class="btn btn-primary" type="submit">Show</button>
+                                </form>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="container">
+                            {{error}}
+                        </div>
+                    {% endblock body %}
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    {{div | safe}}
+                </div>
+            </div>
+            <!-- /.panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bar-chart-o fa-fw"></i> Data Table
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                        
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.col-lg-4 (nested) -->
+                        <div class="col-lg-8">
+                            <div id="morris-bar-chart"></div>
+                        </div>
+                        <!-- /.col-lg-8 (nested) -->
+                    </div>
+                    <!-- /.row -->
+                </div>
+                <!-- /.panel-body -->
+            </div>
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fas fa-dollar-sign"></i> U.S Dollar rates
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="list-group">
+                        <p class="list-group-item">
+                            <i class="fa fa-comment fa-fw"></i> AUD
+                            <span class="pull-right text-muted small"><em>{{aud}}</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                            <span class="pull-right text-muted small"><em>12 minutes ago</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-envelope fa-fw"></i> Message Sent
+                            <span class="pull-right text-muted small"><em>27 minutes ago</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> New Task
+                            <span class="pull-right text-muted small"><em>43 minutes ago</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                            <span class="pull-right text-muted small"><em>11:32 AM</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                            <span class="pull-right text-muted small"><em>11:13 AM</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                            <span class="pull-right text-muted small"><em>10:57 AM</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                            <span class="pull-right text-muted small"><em>9:49 AM</em>
+                            </span>
+                        </p>
+                        <p class="list-group-item">
+                            <i class="fa fa-money fa-fw"></i> Payment Received
+                            <span class="pull-right text-muted small"><em>Yesterday</em>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+</div>
+
+{% endblock indices %}
+
+{% block source %}
+<link rel="stylesheet" href={{css}} type="text/css">
+<script type="text/javascript" src={{js}}></script>
+{{script | safe}}
+{% endblock %}
