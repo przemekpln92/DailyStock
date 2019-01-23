@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 
-{% block indices %}
+{% block user %}
+    {{user}}    
+{% endblock user %}
+
+{% block body %}
 
 <div id="page-wrapper">
     <div class="row">
@@ -129,7 +133,7 @@
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading" >
-                    {% block body %}
+                    {% block candle %}
                             <i class="fas fa-chart-line"></i> CandleStick Chart Area
                             <div class="col-xs-2" style="width: 100%">
                                 <form method="post" style="width: 100%" >
@@ -137,22 +141,26 @@
                                     {{ ticker_date_form }}
                                     <button class="btn btn-primary" type="submit">Show</button>
                                 </form>
+                                {{error}}
                             </div>
                         </br>
                         <div class="container">
-                            {{error}}
                         </div>
-                    {% endblock body %}
+                    {% endblock candle %}
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    {{div | safe}}
+                   {% if div == None %} 
+                   <img src="https://via.placeholder.com/1080x480?text=CandleStick Chart" style="max-width: 100%">
+                   {% else %}
+                   {{div | safe}}
+                   {% endif %}
                 </div>
             </div>
             <!-- /.panel -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-bar-chart-o fa-fw"></i> Data Table
+                    <i class="far fa-newspaper"></i> News
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -237,7 +245,7 @@
     <!-- /.row -->
 </div>
 
-{% endblock indices %}
+{% endblock body %}
 
 {% block source %}
 <link rel="stylesheet" href={{css}} type="text/css">

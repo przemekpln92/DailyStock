@@ -1,5 +1,9 @@
-from django.shortcuts import render, render_to_response
-from pages.forms import TickerAndDate, TickerForm
+from django.shortcuts import render, render_to_response, redirect
+from pages.forms import (
+	TickerAndDate, 
+	RegistrationForm, 
+	EditProfileForm
+)
 import datetime
 from pandas_datareader import data, get_nasdaq_symbols
 import pandas as pd
@@ -7,6 +11,7 @@ from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.resources import CDN
+
 
 # Create your views here.
 
@@ -20,7 +25,9 @@ def index(request):
 
 	#Ticker and date form
 	ticker_date_form = ticker_date_get(TickerAndDate())
-	text = post(TickerAndDate(request.POST))
+	text = post(request,TickerAndDate(request.POST))
+
+
 
 	#Indices bar
 	dia = dia()
@@ -71,7 +78,7 @@ def index(request):
 				"nok":usdrates["NOK"],
 				"sek":usdrates["SEK"],
 				"rub":usdrates["RUB"],
-				"pln":usdrates["PLN"]
+				"pln":usdrates["PLN"],
 				})
 		else:
 			return render( request,'index.html',{
@@ -177,20 +184,39 @@ def tables(request):
 def datasource(request):
 	return render(request,"datasource.html",{})
 
-def forms(request):
-	def get():
-		form = HomeForm()
-		return form
-	form = get()
-	def post():
-		form = HomeForm(request.POST)
+def logout(request):
+	return render(request,"registration/logout.html",{})
+
+def register(request):
+	if request.method == "POST":
+		form = RegistrationForm(request.POST)
 		if form.is_valid():
-			text = form.cleaned_data['post']
-			return text
+			form.save()
+			return redirect('/index')
+	else:
+		form = RegistrationForm()
 
-	text = post()
+		args = {"form": form}
+		return render (request,'registration/register.html', args)
 
-	args = {'form':form, "text":text }
+
+def profile(request):
+	args = {'user':request.user}
+	return render(request,"registration/profile.html",args)
+
+def edit_profile(request):
+	if request.method == 'POST':
+		form = EditProfileForm(request.POST, instance=request.user)
+
+		if form.is_valid():
+			form.save()
+			return redirect('profile')
+
+	else:
+		form = EditProfileForm(instance=request.user)
+		args = {'form': form}
+		return render(request,'registration/edit_profile.html',args)
 
 
-	return render(request,"forms.html",args)
+
+

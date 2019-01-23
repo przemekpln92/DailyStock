@@ -26,6 +26,8 @@
 
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+
+
     {% block source %}
         
     {% endblock source %}
@@ -62,12 +64,15 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
                         </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li> <a>User: {% block user %}{% endblock user %}</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -99,10 +104,9 @@
         </nav>
         
         </div>
-        {% block indices %}
+        {% block body %}
                     
-        {% endblock indices %}
-
+        {% endblock body %}
     <!-- jQuery -->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 
