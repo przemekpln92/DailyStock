@@ -55,7 +55,9 @@
                 </button>
                 <a class="navbar-brand" href="{% url 'index' %}" style="font-style: italic;"><span style="font-size: 1em;"><i class="fas fa-chart-bar"></i></span> DailyStock</a>
             </div>
-            <!-- /.navbar-header -->
+            <!-- /.navbar-header-for-logged-in-users -->
+
+            {% if user.is_authenticated %}
 
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
@@ -64,22 +66,51 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
-                        </li>
-                        <li><a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                        <li>
+                            <a href="{% url 'profile' %}"><i class="far fa-user"></i> Profile</a>
+                        <li>
+                            <a href="{% url 'edit_profile' %}"><i class="fas fa-user-edit"></i> Edit Profile</a>
+                        <li>
+                            <a href="{% url 'change_password' %}"><i class="fas fa-key"></i> Change Password</a>
+                        <li>
+                            <a href="{% url 'reset_password' %}"><i class="fas fa-unlock-alt"></i> Reset Password</a>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Log out</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li> <a>User: {% block user %}{% endblock user %}</a>
+                        <li> 
+                            <a>User: {% block user %}{% endblock user %}</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->
             </ul>
-            <!-- /.navbar-top-links -->
+            <!-- Navbar for anonymous user -->
+
+            {% else %}
+
+            <ul class="nav navbar-top-links navbar-right">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i> Sign in</a>
+                        </li>
+                        <li>
+                            <a href="{% url 'register' %}"><i class="fas fa-user-plus"></i> Register</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+
+            {% endif %}
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">

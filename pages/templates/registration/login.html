@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div class="container">
+<div id="page-wrapper">
 <form class="px-4 py-3" method="POST" action="{% url 'login' %}" style="margin:50px">
     {% csrf_token %}
     {{form.as_p}}

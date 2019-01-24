@@ -15,7 +15,7 @@ class TickerAndDate(forms.ModelForm):
 	date = forms.CharField(widget=forms.TextInput(
 			attrs={
 			'class': 'form-control',
-			'placeholder': 'yyyy-mm-dd',
+			'placeholder': 'From(yyyy-mm-dd)',
 			'style':'display: inline-block;max-width: 150px;margin-right:20px;margin-top:10px'
 			}
 		),label="")

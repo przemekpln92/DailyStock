@@ -4,6 +4,101 @@
 DailyStock - Charts
 {% endblock %}
 
+{% block body %}
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Charts</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <!-- /.row -->
+    <div class="row">
+        <div class="col-lg-12">
+        	{% block candle %}
+            <div class="col-xs-2" style="width: 100%; margin-bottom: 25px">
+                <form method="post" style="width: 100%" >
+                    {% csrf_token %}
+                    {{ ticker_date_form }}
+                    <button class="btn btn-primary" type="submit">Show</button>
+                </form>
+                {{error}}
+            </div>
+        	</br>
+        	<div class="container">
+        	</div>
+            {% endblock candle %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                	<i class="fas fa-chart-line"></i> CandleStick Chart
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                	{% if div == None %} 
+                   	<img src="https://via.placeholder.com/1920x1080?text=CandleStick Chart" style="max-width: 100%">
+                   	{% else %}
+                   	{{div | safe}}
+                   	{% endif %}
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-12 -->
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fas fa-chart-line"></i> Close Price Chart
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    {% if div == None %} 
+                   	<img src="https://via.placeholder.com/1920x1080?text=CandleStick Chart" style="max-width: 100%">
+                   	{% else %}
+                   	{{div_close | safe}}
+                   	{% endif %}
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+        <!-- /.col-lg-6 -->
+        <div class="col-lg-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="far fa-chart-bar"></i> Volume Bar Chart
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                	{% if div == None %} 
+                   	<img src="https://via.placeholder.com/1920x1080?text=CandleStick Chart" style="max-width: 100%">
+                   	{% else %}
+                   	{{div_volume | safe}}
+                   	{% endif %}
+                </div>
+                <!-- /.panel-body -->
+            </div>
+            <!-- /.panel -->
+        </div>
+    </div>
+    <!-- /.row -->
+</div>
+{% endblock body %}
+
+{% block source %}
+	<link rel="stylesheet" href={{css}} type="text/css">
+	<script type="text/javascript" src={{js}}></script>
+	{{script | safe}}
+
+	<link rel="stylesheet" href={{css_close}} type="text/css">
+	<script type="text/javascript" src={{js_close}}></script>
+	{{script_close | safe}}
+
+	<link rel="stylesheet" href={{css_volume}} type="text/css">
+	<script type="text/javascript" src={{js_volume}}></script>
+	{{script_volume | safe}}
+{% endblock %}
+
 {% block user %}
 	{{user}}	
 {% endblock user %}

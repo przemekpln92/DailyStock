@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'DailyStock.DailyStockWeb.middleware.LoginRequiredMiddleware'
 ]
 
 ROOT_URLCONF = 'DailyStockWeb.urls'
@@ -87,6 +88,12 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default' : {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION':'127.0.0.1:8000',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -127,3 +134,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = '/index/'
+
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025

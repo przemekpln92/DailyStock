@@ -4,6 +4,9 @@ from pages.forms import (
 	RegistrationForm, 
 	EditProfileForm
 )
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required
 import datetime
 from pandas_datareader import data, get_nasdaq_symbols
 import pandas as pd
@@ -44,7 +47,7 @@ def index(request):
 
 
 	try:
-		if type(text) == tuple:
+		if request.method == "POST":
 			start_date = start_date_converter(text[1])
 			candle_stick = candle_stick(text[0], start_date)
 			return render( request,'index.html',{
@@ -176,7 +179,41 @@ def index(request):
 			})
 
 def charts(request):
-	return render(request,"charts.html",{})
+	from .plots import candle_stick, one_line, volume
+	from .methods import ticker_date_get,post, start_date_converter
+	ticker_date_form = ticker_date_get(TickerAndDate())
+	text = post(request,TickerAndDate(request.POST))
+
+	if request.method == 'POST':
+		start_date = start_date_converter(text[1])
+		candle_stick = candle_stick(text[0], start_date)
+		close_price = one_line(text[0], start_date)
+		volume = volume(text[0], start_date)
+
+
+		return render(request,"charts.html",{
+			'ticker_date_form':ticker_date_form,
+			"text":text,
+			"js":candle_stick[2],
+			"css":candle_stick[3],
+			"script":candle_stick[0],
+			"div":candle_stick[1],
+			"js_close":close_price[2],
+			"css_close":close_price[3],
+			"script_close":close_price[0],
+			"div_close":close_price[1],
+			"js_volume":volume[2],
+			"css_volume":volume[3],
+			"script_volume":volume[0],
+			"div_volume":volume[1],
+
+		})
+
+	else:
+		return render(request,"charts.html",{
+			'ticker_date_form':ticker_date_form,
+			"text":text,})
+
 
 def tables(request):
 	return render(request,"tables.html",{})
@@ -184,6 +221,7 @@ def tables(request):
 def datasource(request):
 	return render(request,"datasource.html",{})
 
+@login_required
 def logout(request):
 	return render(request,"registration/logout.html",{})
 
@@ -199,11 +237,12 @@ def register(request):
 		args = {"form": form}
 		return render (request,'registration/register.html', args)
 
-
+@login_required
 def profile(request):
 	args = {'user':request.user}
 	return render(request,"registration/profile.html",args)
 
+@login_required
 def edit_profile(request):
 	if request.method == 'POST':
 		form = EditProfileForm(request.POST, instance=request.user)
@@ -217,6 +256,19 @@ def edit_profile(request):
 		args = {'form': form}
 		return render(request,'registration/edit_profile.html',args)
 
+@login_required
+def change_password(request):
+	if request.method == 'POST':
+		form = PasswordChangeForm(data=request.POST, user=request.user)
 
+		if form.is_valid():
+			form.save()
+			update_session_auth_hash(request, form.user)
+			return redirect('profile')
+		else:
+			return redirect('change_password')
 
-
+	else:
+		form = PasswordChangeForm(user=request.user)
+		args = {'form': form}
+		return render(request,'registration/change_password.html',args)
