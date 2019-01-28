@@ -5,6 +5,9 @@ from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.resources import CDN
+import os
+
+
 
 def get_security_name(ticker):
         symbols = get_nasdaq_symbols()
@@ -86,6 +89,12 @@ def candle_stick(ticker_and_date,start_date):
         mode='vline'  # Display a tooltip
     ))
 
+    #Saving dataframe as an csv file
+    file_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_folder = 'static/csv'
+    file_path = os.path.join(file_dir, csv_folder, 'data.csv')
+    df.to_csv(file_path, header=True, index=True)
+
     script_candle, div_candle = components(p)
     cdn_js = CDN.js_files[0]
     cdn_css = CDN.css_files[0]
@@ -139,6 +148,7 @@ def one_line(ticker_and_date,start_date):
 
         mode='vline'  # Display a tooltip
     ))
+
 
     script_candle, div_candle = components(p)
     cdn_js = CDN.js_files[0]

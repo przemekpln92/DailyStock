@@ -1,4 +1,16 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block source %}
+<!-- DataTables CSS -->
+<link href="{% static 'vendor/datatables-plugins/dataTables.bootstrap.css' %}" rel="stylesheet">
+
+<!-- DataTables Responsive CSS -->
+<link href="{% static 'vendor/datatables-responsive/dataTables.responsive.css' %}" rel="stylesheet">
+
+<!-- Custom Fonts -->
+<link href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+{% endblock source %}
 
 {% block user %}
 	{{user}}	
@@ -7,3 +19,68 @@
 {% block title %}
 DailyStock - Tables
 {% endblock %}
+
+{% block body %}
+	<div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Tables</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            DataTable  <b>{{request.session.security_name | safe}}</b>
+                        </div>
+                        <div class="panel-heading">
+                        	<form method="post" style="width: 100%" >
+                                    {% csrf_token %}
+                                    {{ ticker_date_form }}
+            						
+            						{% if request.session.tickerposttable != None %}
+
+                                    <button class="btn btn-primary" type="submit">Show</button>
+                                    <a href="{% static 'csv/data.csv' %}" download="data{{request.session.tickerposttable}}.csv" style="float:right">.csv <i class="fas fa-download"></i></a>
+
+                                    {% else %}
+
+                                    <button class="btn btn-primary" type="submit">Show</button>
+
+                                    {% endif %}
+
+                                </form>
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+
+                            {{request.session.table_generator | safe}}
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+{% endblock body %}
+
+{% block script %}
+
+<!-- DataTables JavaScript -->
+<script src="{% static '/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static '/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+<script src="{% static '/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+$(document).ready(function() {
+    $('#dataTables-example').DataTable({
+        responsive: true
+    });
+});
+</script>
+{% endblock script %}
+

@@ -1,6 +1,10 @@
 from datetime import datetime, timedelta
 from .models import Post
-
+from pandas_datareader import data
+from pandas import DataFrame
+import datetime
+from IPython.display import HTML
+import os
 #Get/post ticker and date form
 def ticker_date_get(TickerAndDate):
 	ticker_date_form = TickerAndDate
@@ -22,6 +26,32 @@ def start_date_converter(date):
     x = start_date.split('-')
     result = list(map(int, x))
     return result
+
 #Percentage converter
 def percentage(close, prev_close):
   return 100 * float(close)/float(prev_close) - 100
+
+#Table generator
+def table_generator(ticker,start_date):
+
+	start = datetime.datetime(start_date[0],start_date[1],start_date[2])
+
+	df = data.DataReader(name=ticker, data_source="iex", start=start, end=None)
+	
+	#Saving dataframe as an csv file
+	file_dir = os.path.dirname(os.path.abspath(__file__))
+	csv_folder = 'static/csv'
+	file_path = os.path.join(file_dir, csv_folder, 'data.csv')
+	df.to_csv(file_path, header=True, index=True)
+
+	for x in df.index:
+	    frame = {'open' : df['open'],
+	             'high' : df['high'],
+	             'low' : df['low'],
+	             'close' : df['close'],
+	             'volume' : df['volume'],
+	            }
+	df = DataFrame(frame)
+	html = df.to_html(classes = 'table table-striped table-bordered table-hover', table_id='dataTables-example')
+
+	return html

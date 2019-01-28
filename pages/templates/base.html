@@ -135,9 +135,9 @@
         </nav>
         
         </div>
-        {% block body %}
+    {% block body %}
                     
-        {% endblock body %}
+    {% endblock body %}
     <!-- jQuery -->
     <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
 
@@ -146,6 +146,11 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="{% static 'vendor/metisMenu/metisMenu.min.js' %}"></script>
+
+    {% block script %}
+        
+    {% endblock script %}
+
 </body>
 
 </html>

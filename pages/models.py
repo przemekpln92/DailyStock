@@ -15,5 +15,3 @@ class UserProfile(models.Model):
 class Post(models.Model):
 	post = models.CharField(max_length=500)
 	user = models.ForeignKey(User, models.CASCADE)
-
-		

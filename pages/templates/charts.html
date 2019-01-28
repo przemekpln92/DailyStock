@@ -34,10 +34,10 @@ DailyStock - Charts
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                	{% if div == None %} 
+                	{% if request.session.chplot == None %}
                    	<img src="https://via.placeholder.com/1920x1080?text=CandleStick Chart" style="max-width: 100%">
                    	{% else %}
-                   	{{div | safe}}
+                   	{{request.session.chplot | safe}}
                    	{% endif %}
                 </div>
                 <!-- /.panel-body -->
@@ -52,10 +52,10 @@ DailyStock - Charts
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    {% if div == None %} 
-                   	<img src="https://via.placeholder.com/1920x1080?text=CandleStick Chart" style="max-width: 100%">
+                    {% if request.session.plotclose == None %} 
+                   	<img src="https://via.placeholder.com/1920x1080?text=Close Price Chart" style="max-width: 100%">
                    	{% else %}
-                   	{{div_close | safe}}
+                   	{{request.session.plotclose | safe}}
                    	{% endif %}
                 </div>
                 <!-- /.panel-body -->
@@ -70,10 +70,10 @@ DailyStock - Charts
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                	{% if div == None %} 
-                   	<img src="https://via.placeholder.com/1920x1080?text=CandleStick Chart" style="max-width: 100%">
+                	{% if request.session.plotvolume == None %} 
+                   	<img src="https://via.placeholder.com/1920x1080?text=Volume Bar Chart" style="max-width: 100%">
                    	{% else %}
-                   	{{div_volume | safe}}
+                   	{{request.session.plotvolume | safe}}
                    	{% endif %}
                 </div>
                 <!-- /.panel-body -->
@@ -86,17 +86,20 @@ DailyStock - Charts
 {% endblock body %}
 
 {% block source %}
-	<link rel="stylesheet" href={{css}} type="text/css">
-	<script type="text/javascript" src={{js}}></script>
-	{{script | safe}}
+    <!-- CandleStick -->
+	<link rel="stylesheet" href={{request.session.chplotcss}} type="text/css">
+	<script type="text/javascript" src={{request.chsession.plotjs}}></script>
+	{{request.session.chplotscript | safe}}
 
-	<link rel="stylesheet" href={{css_close}} type="text/css">
-	<script type="text/javascript" src={{js_close}}></script>
-	{{script_close | safe}}
+    <!-- Close price -->
+	<link rel="stylesheet" href={{request.session.plotcssclose}} type="text/css">
+	<script type="text/javascript" src={{request.session.plotjsclose}}></script>
+	{{request.session.plotscriptclose | safe}}
 
-	<link rel="stylesheet" href={{css_volume}} type="text/css">
-	<script type="text/javascript" src={{js_volume}}></script>
-	{{script_volume | safe}}
+    <!-- Volume price -->
+	<link rel="stylesheet" href={{request.session.plotcssvolume}} type="text/css">
+	<script type="text/javascript" src={{request.session.plotjsvolume}}></script>
+	{{request.session.plotscriptvolume | safe}}
 {% endblock %}
 
 {% block user %}

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load staticfiles %}
 {% block user %}
     {{user}}    
 {% endblock user %}
@@ -16,7 +16,7 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-primary">
+            <div class="panel panel-primary" style="padding-bottom: 1px">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-green">
+            <div class="panel panel-green" style="padding-bottom: 1px">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-yellow">
+            <div class="panel panel-yellow" style="padding-bottom: 1px">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
@@ -100,7 +100,7 @@
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-            <div class="panel panel-red">
+            <div class="panel panel-red" style="padding-bottom: 1px">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
@@ -139,7 +139,16 @@
                                 <form method="post" style="width: 100%" >
                                     {% csrf_token %}
                                     {{ ticker_date_form }}
+
+                                    {% if request.session.tickerpost != None %}
                                     <button class="btn btn-primary" type="submit">Show</button>
+                                    <a href="{% static 'csv/data.csv' %}" download="data{{request.session.tickerpost}}.csv" style="float:right">.csv <i class="fas fa-download"></i></a>
+
+                                    {% else %}
+
+                                    <button class="btn btn-primary" type="submit">Show</button>
+
+                                    {% endif %}
                                 </form>
                                 {{error}}
                             </div>
@@ -150,10 +159,10 @@
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                   {% if div == None %} 
+                   {% if request.session.plot == None %} 
                    <img src="https://via.placeholder.com/1920x1080?text=CandleStick Chart" style="max-width: 100%">
                    {% else %}
-                   {{div | safe}}
+                   {{request.session.plot | safe}}
                    {% endif %}
                 </div>
             </div>
@@ -248,7 +257,7 @@
 {% endblock body %}
 
 {% block source %}
-<link rel="stylesheet" href={{css}} type="text/css">
-<script type="text/javascript" src={{js}}></script>
-{{script | safe}}
+<link rel="stylesheet" href={{request.session.plotcss}} type="text/css">
+<script type="text/javascript" src={{request.session.plotjs}}></script>
+{{request.session.plotscript | safe}}
 {% endblock %}

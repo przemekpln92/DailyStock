@@ -1,4 +1,5 @@
 from django.shortcuts import render, render_to_response, redirect
+from django.conf import settings
 from pages.forms import (
 	TickerAndDate, 
 	RegistrationForm, 
@@ -14,6 +15,7 @@ from bokeh.plotting import figure, show, output_file
 from bokeh.models import ColumnDataSource, HoverTool
 from bokeh.embed import components
 from bokeh.resources import CDN
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -21,6 +23,10 @@ from bokeh.resources import CDN
 
 
 def index(request):
+
+	if not request.user.is_authenticated:
+		return redirect( 'login')
+
 	from .plots import candle_stick
 	from .methods import ticker_date_get,post, start_date_converter, percentage
 	from .indices import dia, spy, iwm, jpxn
@@ -28,9 +34,7 @@ def index(request):
 
 	#Ticker and date form
 	ticker_date_form = ticker_date_get(TickerAndDate())
-	text = post(request,TickerAndDate(request.POST))
-
-
+	
 
 	#Indices bar
 	dia = dia()
@@ -48,15 +52,24 @@ def index(request):
 
 	try:
 		if request.method == "POST":
-			start_date = start_date_converter(text[1])
-			candle_stick = candle_stick(text[0], start_date)
+			text = TickerAndDate(request.POST)
+			if text.is_valid():
+				ticker = text.cleaned_data['ticker']
+				date = text.cleaned_data['date']
+				ticker_choice = request.session['tickerpost'] = ticker
+				date_choice = request.session['datepost'] = date
+
+				start_date = start_date_converter(date_choice)
+				candle_stick = candle_stick(ticker_choice, start_date)
+
+				request.session['plot'] = candle_stick[1]
+				request.session['plotjs'] = candle_stick[2]
+				request.session['plotcss'] = candle_stick[3]
+				request.session['plotscript'] = candle_stick[0]
+				
 			return render( request,'index.html',{
-				"js":candle_stick[2],
-				"css":candle_stick[3],
-				"script":candle_stick[0],
-				"div":candle_stick[1],
 				'ticker_date_form':ticker_date_form, 
-				"text":text,
+				"ticker":ticker,
 				"dia_close":dia[0],
 				"dia_prev_close":dia[1],
 				"dia_name":dia[2][1],
@@ -86,7 +99,6 @@ def index(request):
 		else:
 			return render( request,'index.html',{
 				'ticker_date_form':ticker_date_form, 
-				"text":text,
 				"dia_close":dia[0],
 				"dia_prev_close":dia[1],
 				"dia_name":dia[2][1],
@@ -111,7 +123,7 @@ def index(request):
 				"nok":usdrates["NOK"],
 				"sek":usdrates["SEK"],
 				"rub":usdrates["RUB"],
-				"pln":usdrates["PLN"]
+				"pln":usdrates["PLN"],
 				})
 	except KeyError:
 		error = "Wrong ticker! Complete list of tickers you can finde here: https://iextrading.com/trading/eligible-symbols/"
@@ -181,14 +193,37 @@ def index(request):
 def charts(request):
 	from .plots import candle_stick, one_line, volume
 	from .methods import ticker_date_get,post, start_date_converter
+
 	ticker_date_form = ticker_date_get(TickerAndDate())
-	text = post(request,TickerAndDate(request.POST))
 
 	if request.method == 'POST':
-		start_date = start_date_converter(text[1])
-		candle_stick = candle_stick(text[0], start_date)
-		close_price = one_line(text[0], start_date)
-		volume = volume(text[0], start_date)
+		text = TickerAndDate(request.POST)
+		if text.is_valid():
+			ticker = text.cleaned_data['ticker']
+			date = text.cleaned_data['date']
+			ticker_choice = request.session['tickerpost'] = ticker
+			date_choice = request.session['datepost'] = date
+
+			start_date = start_date_converter(date_choice)
+			candle_stick = candle_stick(ticker_choice, start_date)
+			close_price = one_line(ticker_choice, start_date)
+			volume = volume(ticker_choice, start_date)
+
+			#Sessions
+			request.session['chplot'] = candle_stick[1]
+			request.session['chplotjs'] = candle_stick[2]
+			request.session['chplotcss'] = candle_stick[3]
+			request.session['chplotscript'] = candle_stick[0]
+
+			request.session['plotclose'] = close_price[1]
+			request.session['plotjsclose'] = close_price[2]
+			request.session['plotcssclose'] = close_price[3]
+			request.session['plotscriptclose'] = close_price[0]
+
+			request.session['plotvolume'] = volume[1]
+			request.session['plotjsvolume'] = volume[2]
+			request.session['plotcssvolume'] = volume[3]
+			request.session['plotscriptvolume'] = volume[0]
 
 
 		return render(request,"charts.html",{
@@ -211,12 +246,41 @@ def charts(request):
 
 	else:
 		return render(request,"charts.html",{
-			'ticker_date_form':ticker_date_form,
-			"text":text,})
+			'ticker_date_form':ticker_date_form,})
 
 
 def tables(request):
-	return render(request,"tables.html",{})
+	from .methods import ticker_date_get,post, start_date_converter, table_generator
+	from .plots import get_security_name
+
+	ticker_date_form = ticker_date_get(TickerAndDate())
+
+	
+
+	if request.method == "POST":
+		text = TickerAndDate(request.POST)
+		if text.is_valid():
+			ticker = text.cleaned_data['ticker']
+			date = text.cleaned_data['date']
+			ticker_choice = request.session['tickerposttable'] = ticker
+			date_choice = request.session['datepost'] = date
+			security_name = get_security_name(ticker)
+			request.session['security_name'] = security_name[1]
+
+			start_date = start_date_converter(date_choice)
+			table_generator = table_generator(ticker_choice, start_date)
+
+			#Sessions
+			request.session['table_generator'] = table_generator
+
+		return render(request,"tables.html",{
+			'ticker_date_form':ticker_date_form,
+		})
+
+	else:
+		return render(request,"tables.html",{
+			'ticker_date_form':ticker_date_form,})
+
 
 def datasource(request):
 	return render(request,"datasource.html",{})
