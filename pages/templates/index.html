@@ -141,8 +141,8 @@
                                     {{ ticker_date_form }}
 
                                     {% if request.session.tickerpost != None %}
-                                    <button class="btn btn-primary" type="submit">Show</button>
-                                    <a href="{% static 'csv/data.csv' %}" download="data{{request.session.tickerpost}}.csv" style="float:right">.csv <i class="fas fa-download"></i></a>
+                                    <button class="btn btn-primary" style="margin-right:10px; margin-top:10px; margin-bottom:10px" type="submit">Show</button>
+                                    <a href="{% static 'csv/data.csv' %}" download="data{{request.session.tickerpost}}.csv">.csv <i class="fas fa-download"></i></a>
 
                                     {% else %}
 
@@ -150,7 +150,7 @@
 
                                     {% endif %}
                                 </form>
-                                {{error}}
+                                <div id="error" style="margin:5px">{{error}}</div>
                             </div>
                         </br>
                         <div class="container">
@@ -169,22 +169,21 @@
             <!-- /.panel -->
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="far fa-newspaper"></i> News
+                    <i class="far fa-newspaper"></i> News powered by 
+                    <a href="https://newsapi.org" target="_blank">NewsAPI.org</a>
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-4">
-                        
-                            <!-- /.table-responsive -->
+                    {% for item in request.session.jsonnews.articles %}
+                          <div class="list-group">
+                            <div class="list-group-item">
+                                <img class="pull-right" src="{{item.urlToImage}}" alt="Card image cap" style="height:150px; height: 75px; border-radius: 5px; text-align: center ">
+                                <h5 style="font-weight:700">{{item.title}}</h5>
+                                <p>{{item.description}}</p>
+                                <a href="{{item.url}}" target="_blank">{{item.source.name}}</a>
+                            </div>
                         </div>
-                        <!-- /.col-lg-4 (nested) -->
-                        <div class="col-lg-8">
-                            <div id="morris-bar-chart"></div>
-                        </div>
-                        <!-- /.col-lg-8 (nested) -->
-                    </div>
-                    <!-- /.row -->
+                    {% endfor %}
                 </div>
                 <!-- /.panel-body -->
             </div>
@@ -254,10 +253,12 @@
     <!-- /.row -->
 </div>
 
+
 {% endblock body %}
 
 {% block source %}
 <link rel="stylesheet" href={{request.session.plotcss}} type="text/css">
 <script type="text/javascript" src={{request.session.plotjs}}></script>
 {{request.session.plotscript | safe}}
+
 {% endblock %}

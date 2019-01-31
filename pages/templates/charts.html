@@ -20,9 +20,9 @@ DailyStock - Charts
                 <form method="post" style="width: 100%" >
                     {% csrf_token %}
                     {{ ticker_date_form }}
-                    <button class="btn btn-primary" type="submit">Show</button>
+                    <button class="btn btn-primary" type="submit" style="margin-right:10px; margin-top:10px; margin-bottom:10px">Show</button>
                 </form>
-                {{error}}
+                <div id="error" style="margin-top: 10px">{{error}}</div>
             </div>
         	</br>
         	<div class="container">

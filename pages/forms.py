@@ -23,6 +23,20 @@ class TickerAndDate(forms.ModelForm):
 		model = Post
 		fields = ("ticker","date",)
 
+#Currency form
+class CurrencyForm(forms.ModelForm):
+	currencies = ('','USD','AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HRK','HUF',
+		'IDR','ILS','INR','ISK','JPY','KRW','MXN','MYR','NOK','NZD','PHP','PLN','RON','RUB','SEK','SGD',
+		'THB','TRY','ZAR')
+	currency = forms.ChoiceField(choices=[(x, x) for x in currencies])
+	class Meta:
+		model = Post
+		fields = ("currency",)
+
+
+
+
+
 #Registration form
 class RegistrationForm(UserCreationForm):
 	email = forms.EmailField(required=True)

@@ -10,6 +10,7 @@ urlpatterns = [
     path('index/',views.index, name='index'),
     path('charts/',views.charts, name='charts'),
     path('tables/',views.tables, name='tables'),
+    path('rates/',views.rates, name='rates'),
     path('datasource/',views.datasource, name='datasource'),
     path('login/', LoginView.as_view(), name='login'),
     path('registration/logout/',views.logout, name='logout'),

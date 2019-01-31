@@ -3,6 +3,10 @@ from datetime import datetime
 
 def usd_rates():
 	c = CurrencyRates()
-	today = datetime.now()
-	usdrates= c.get_rates('USD',today)
+	usdrates= c.get_rates('USD')
 	return usdrates
+
+def all_rates(currency):
+	c = CurrencyRates()
+	rates= c.get_rates(currency)
+	return rates
