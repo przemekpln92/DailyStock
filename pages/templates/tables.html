@@ -21,6 +21,7 @@ DailyStock - Tables
 {% endblock %}
 
 {% block body %}
+
 	<div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
@@ -67,22 +68,16 @@ DailyStock - Tables
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
+
 {% endblock body %}
 
 {% block script %}
 
-<!-- DataTables JavaScript -->
-<script src="{% static '/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
-<script src="{% static '/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
-<script src="{% static '/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+    <!-- DataTables JavaScript -->
+    <script src="{% static '/vendor/datatables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static '/vendor/datatables-plugins/dataTables.bootstrap.min.js' %}"></script>
+    <script src="{% static '/vendor/datatables-responsive/dataTables.responsive.js' %}"></script>
+    <script src="{% static 'dist/js/custom.js' %}"></script>
 
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-$(document).ready(function() {
-    $('#dataTables-example').DataTable({
-        responsive: true
-    });
-});
-</script>
 {% endblock script %}
 

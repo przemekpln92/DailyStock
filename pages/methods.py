@@ -5,6 +5,8 @@ from pandas import DataFrame
 import datetime
 from IPython.display import HTML
 import os
+
+
 #Get/post ticker and date form
 def ticker_date_get(TickerAndDate):
 	ticker_date_form = TickerAndDate

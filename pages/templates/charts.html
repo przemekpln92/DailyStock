@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block title %}
 DailyStock - Charts
@@ -9,6 +10,7 @@ DailyStock - Charts
 {% endblock user %}
 
 {% block body %}
+
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
@@ -87,6 +89,7 @@ DailyStock - Charts
     </div>
     <!-- /.row -->
 </div>
+
 {% endblock body %}
 
 {% block source %}
@@ -105,3 +108,10 @@ DailyStock - Charts
 	<script type="text/javascript" src={{request.session.plotjsvolume}}></script>
 	{{request.session.plotscriptvolume | safe}}
 {% endblock %}
+
+{% block script %}
+
+    <!--Error and password timeout-->
+    <script src="{% static 'dist/js/custom.js' %}"></script>
+    
+{% endblock script %}

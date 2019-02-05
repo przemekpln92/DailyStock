@@ -8,7 +8,7 @@ from bokeh.resources import CDN
 import os
 
 
-
+#Retreive security full name
 def get_security_name(ticker):
         symbols = get_nasdaq_symbols()
         security_name = (symbols.loc[ticker])

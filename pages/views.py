@@ -332,6 +332,8 @@ def tables(request):
 				'error':error,
 				})
 
+
+#Currency rates page
 def rates(request):
 	from .currency import all_rates
 
@@ -374,9 +376,7 @@ def rates(request):
 			})
 
 
-
-
-
+#DataSource page
 def datasource(request):
 	if not request.user.is_authenticated:
 		return redirect( 'login')

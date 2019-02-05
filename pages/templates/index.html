@@ -256,8 +256,16 @@
 {% endblock body %}
 
 {% block source %}
+
 <link rel="stylesheet" href={{request.session.plotcss}} type="text/css">
 <script type="text/javascript" src={{request.session.plotjs}}></script>
 {{request.session.plotscript | safe}}
 
 {% endblock %}
+
+{% block script %}
+
+    <!--Error and password timeout-->
+    <script src="{% static 'dist/js/custom.js' %}"></script>
+    
+{% endblock script %}
