@@ -43,15 +43,18 @@ def table_generator(ticker,start_date):
 	csv_folder = 'static/csv'
 	file_path = os.path.join(file_dir, csv_folder, 'data.csv')
 	df.to_csv(file_path, header=True, index=True)
+	df = df.reset_index().rename(columns={'date':'date'})
+	df['index'] = df.index
+	df.set_index('index')
 
 	for x in df.index:
-	    frame = {'open' : df['open'],
-	             'high' : df['high'],
-	             'low' : df['low'],
-	             'close' : df['close'],
-	             'volume' : df['volume'],
+	    frame = {'Date' : df['date'],
+	    		'Open' : df['open'],
+	    		'High' : df['high'],
+	            'Low' : df['low'],
+	            'Close' : df['close'],
 	            }
 	df = DataFrame(frame)
-	html = df.to_html(classes = 'table table-striped table-bordered table-hover', table_id='dataTables-example')
+	html = df.to_html(classes = 'table table-striped table-bordered table-hover', table_id='dataTables-example', index=False)
 
 	return html

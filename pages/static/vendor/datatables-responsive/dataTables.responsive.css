@@ -9,7 +9,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr > th:first-child:before {
   top: 8px;
   left: 4px;
   height: 16px;
-  width: 16px;
+  width: 100%;
   display: block;
   position: absolute;
   color: white;
@@ -43,7 +43,7 @@ table.dataTable.dtr-inline.collapsed.compact > tbody > tr > th:first-child:befor
   top: 5px;
   left: 4px;
   height: 14px;
-  width: 14px;
+  width: 100%;
   border-radius: 14px;
   line-height: 12px;
 }
@@ -57,7 +57,7 @@ table.dataTable.dtr-column > tbody > tr > th.control:before {
   top: 50%;
   left: 50%;
   height: 16px;
-  width: 16px;
+  width: 100%;
   margin-top: -10px;
   margin-left: -10px;
   display: block;
@@ -101,6 +101,6 @@ table.dataTable > tbody > tr.child ul li:last-child {
 }
 table.dataTable > tbody > tr.child span.dtr-title {
   display: inline-block;
-  min-width: 75px;
+  min-width: 100%;
   font-weight: bold;
 }

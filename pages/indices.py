@@ -7,7 +7,7 @@ def dia():
     start = end - timedelta(days=5)
     df = data.DataReader(name="DIA", data_source="iex", start=start, end=None)
     lenght = len(df.index)
-    close = df["close"][lenght -1]
+    close = round(df["close"][lenght -1],2)
     previous_close = df["close"][lenght - 2]
     symbols = get_nasdaq_symbols()
     security_name = (symbols.loc["DIA"])
@@ -18,7 +18,7 @@ def spy():
     start = end - timedelta(days=5)
     df = data.DataReader(name="SPY", data_source="iex", start=start, end=None)
     lenght = len(df.index)
-    close = df["close"][lenght -1]
+    close = round(df["close"][lenght -1],2)
     previous_close = df["close"][lenght - 2]
     symbols = get_nasdaq_symbols()
     security_name = (symbols.loc["SPY"])
@@ -29,7 +29,7 @@ def iwm():
     start = end - timedelta(days=5)
     df = data.DataReader(name="IWM", data_source="iex", start=start, end=None)
     lenght = len(df.index)
-    close = df["close"][lenght -1]
+    close = round(df["close"][lenght -1],2)
     previous_close = df["close"][lenght - 2]
     symbols = get_nasdaq_symbols()
     security_name = (symbols.loc["IWM"])
@@ -40,7 +40,7 @@ def jpxn():
     start = end - timedelta(days=5)
     df = data.DataReader(name="JPXN", data_source="iex", start=start, end=None)
     lenght = len(df.index)
-    close = df["close"][lenght -1]
+    close = round(df["close"][lenght -1],2)
     previous_close = df["close"][lenght - 2]
     symbols = get_nasdaq_symbols()
     security_name = (symbols.loc["JPXN"])

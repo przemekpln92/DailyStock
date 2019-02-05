@@ -4,6 +4,10 @@
 DailyStock - Charts
 {% endblock %}
 
+{% block user %}
+    <a href="{% url 'profile' %}">{{user}}</a>
+{% endblock user %}
+
 {% block body %}
 <div id="page-wrapper">
     <div class="row">
@@ -30,7 +34,7 @@ DailyStock - Charts
             {% endblock candle %}
             <div class="panel panel-default">
                 <div class="panel-heading">
-                	<i class="fas fa-chart-line"></i> CandleStick Chart
+                	<i class="fas fa-chart-line"></i> CandleStick Chart</br> Data provided for free by <a href="https://iextrading.com" target="blank">IEX</a>. View IEX’s <a href="https://iextrading.com/api-exhibit-a/" target="balnk">Terms of Use</a>.
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
@@ -101,7 +105,3 @@ DailyStock - Charts
 	<script type="text/javascript" src={{request.session.plotjsvolume}}></script>
 	{{request.session.plotscriptvolume | safe}}
 {% endblock %}
-
-{% block user %}
-	{{user}}	
-{% endblock user %}

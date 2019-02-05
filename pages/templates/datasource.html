@@ -4,10 +4,22 @@
 DailyStock - Data Source
 {% endblock %}
 
-{% block content%}
+{% block user %}
+	<a href="{% url 'profile' %}">{{user}}</a>
+{% endblock user %}
+
+{% block body%}
+
+<div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Data Source</h1>
+                </div>
+                <p>Stock data provided for free by <a href="https://iextrading.com" target="blank">IEX</a>. View IEX’s <a href="https://iextrading.com/api-exhibit-a/" target="balnk">Terms of Use</a>.</p>
+                <p>Complete list of tickers you can find<a href="https://iextrading.com/trading/eligible-symbols/" target="blank"> here</a>.</p>
+                <p>Currency rates provided by <a href="https://ratesapi.io/" target="blank"> ratesapi.io</a>.</p>  
+                <!-- /.col-lg-12 -->
+            </div>
+</div>
 
 {% endblock %}
-
-{% block user %}
-	{{user}}	
-{% endblock user %}

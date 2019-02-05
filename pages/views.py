@@ -45,12 +45,16 @@ def index(request):
 
 	#Indices bar
 	dia = dia()
+	dia_close = dia[0]
 	dia_percentage = round(percentage(dia[0],dia[1]),3)
 	spy = spy()
+	spy_close = spy[0]
 	spy_percentage = round(percentage(spy[0],spy[1]),3)
 	iwm = iwm()
+	iwm_close = iwm[0]
 	iwm_percentage = round(percentage(iwm[0],iwm[1]),3)
 	jpxn = jpxn()
+	jpxn_close = jpxn[0]
 	jpxn_percentage = round(percentage(jpxn[0],jpxn[1]),3)
 
 	#Currency
@@ -93,7 +97,7 @@ def index(request):
 				"iwm_prev_close":iwm[1],
 				"iwm_name":iwm[2][1],
 				"iwm_percentage":iwm_percentage,
-				"jpxn_close":jpxn[0],
+				"jpxn_close":jpxn_close,
 				"jpxn_prev_close":jpxn[1],
 				"jpxn_name":jpxn[2][1],
 				"jpxn_percentage":jpxn_percentage,

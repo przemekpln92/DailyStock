@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+
 {% block user %}
-    {{user}}    
+    <a href="{% url 'profile' %}">{{user}}</a>
 {% endblock user %}
 
 {% block body %}
@@ -19,7 +20,7 @@
             <div class="panel panel-primary" style="padding-bottom: 1px">
                 <div class="panel-heading">
                     <div class="row">
-                        <div class="col-xs-3">
+                        <div class="col-xs-3"> 
                             {% if dia_close > dia_prev_close %} 
                             <i class="fas fa-arrow-up fa-4x"></i>
                             {% else %}
@@ -133,8 +134,7 @@
         <div class="col-lg-8">
             <div class="panel panel-default">
                 <div class="panel-heading" >
-                    {% block candle %}
-                            <i class="fas fa-chart-line"></i> CandleStick Chart Area
+                            <i class="fas fa-chart-line"></i> CandleStick Chart</br> Data provided for free by <a href="https://iextrading.com" target="blank">IEX</a>. View IEX’s <a href="https://iextrading.com/api-exhibit-a/" target="balnk">Terms of Use</a>.
                             <div class="col-xs-2" style="width: 100%">
                                 <form method="post" style="width: 100%" >
                                     {% csrf_token %}
@@ -155,7 +155,6 @@
                         </br>
                         <div class="container">
                         </div>
-                    {% endblock candle %}
                 </div>
                 <!-- /.panel-heading -->
                 <div class="panel-body">
