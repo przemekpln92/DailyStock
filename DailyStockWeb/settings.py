@@ -31,7 +31,7 @@ SECRET_KEY = 't56!0$@9-a!og5cca6&+-ml@iv9c&^ermdkp-voj4q-h=)^i73'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dailystock.pythonanywhere.com']
 
 
 # Application definition
@@ -135,6 +135,8 @@ USE_TZ = True
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = '/home/DailyStock/DailyStock/static'
 
 LOGIN_REDIRECT_URL = '/index/'
 
